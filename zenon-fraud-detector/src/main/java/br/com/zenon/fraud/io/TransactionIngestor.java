@@ -1,0 +1,57 @@
+package br.com.zenon.fraud.io;
+
+
+import br.com.zenon.fraud.enums.Type;
+import br.com.zenon.fraud.records.Transaction;
+import br.com.zenon.fraud.records.TransactionCostumer;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+public  class  TransactionIngestor {
+
+    List<Transaction> transactions = new ArrayList<>();
+    Path filePath;
+
+    public TransactionIngestor(String fileName) {
+        this.filePath = Path.of(fileName);
+    }
+
+
+    public List<Transaction> readLines(int linesRead) {
+        try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
+            transactions =  lines.skip(1).limit(linesRead)
+                    .map(linha -> linha.split(","))
+                    .map(this::criarTransacaoDoArray)
+                    .toList();
+            return transactions;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Transaction criarTransacaoDoArray(String[] linha) {
+
+        return new Transaction(Integer.parseInt(linha[0]),
+                Type.valueOf(linha[1]),
+                new BigDecimal(linha[2]),
+                new TransactionCostumer(linha[3],
+                        new BigDecimal(linha[4]),
+                        new BigDecimal(linha[5])),
+                new TransactionCostumer(linha[6],
+                        new BigDecimal(linha[7]),
+                        new BigDecimal(linha[8])),
+                "1".equals(linha[9]),
+                "1".equals(linha[10]));
+    }
+
+    public void printLines(int linesPrint) {
+        transactions.stream().limit(linesPrint).forEach(System.out::println);
+    }
+}

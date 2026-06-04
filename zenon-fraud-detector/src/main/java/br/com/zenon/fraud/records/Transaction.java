@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 public record Transaction(int step,
                           Type type,
                           BigDecimal amount,
-                          TransactionCustomer orign,
-                          TransactionCustomer destination,
+                          TransactionCostumer orign,
+                          TransactionCostumer destination,
                           boolean isFraud,
                           boolean isFlaggedFraud){
 
