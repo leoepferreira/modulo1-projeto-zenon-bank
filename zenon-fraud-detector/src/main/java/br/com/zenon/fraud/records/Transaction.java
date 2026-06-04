@@ -8,7 +8,7 @@ public record Transaction(int step,
                           BigDecimal amount,
                           TransactionCustomer orign,
                           TransactionCustomer destination,
-                          int isFraud,
-                          int isFlaggedFraud){
+                          boolean isFraud,
+                          boolean isFlaggedFraud){
 
 }
