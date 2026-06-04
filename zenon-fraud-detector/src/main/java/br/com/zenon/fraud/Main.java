@@ -1,5 +1,4 @@
 import br.com.zenon.fraud.enums.Type;
-import br.com.zenon.fraud.io.TransactionIngestor;
 import br.com.zenon.fraud.records.Transaction;
 import br.com.zenon.fraud.records.TransactionCustomer;
 
@@ -32,12 +31,6 @@ void main() {
 
     println("Transação 1:" + transaction1);
     println("Transação 2:" + transaction2);
-
-    String file = new String("C:\\Users\\Leo\\GitUnipds\\modulo1-projeto-zenon-bank\\zenon-fraud-detector\\data\\PS_20174392719_1491204439457_log.csv");
-
-    TransactionIngestor transactionIngestor =  new TransactionIngestor(file);
-    transactionIngestor.readLines(1000);
-//    transactionIngestor.printLines(10);
 
 }
 
