@@ -30,15 +30,25 @@ void main() {
             true,
             false);
 
-    println("Transação 1:" + transaction1);
-    println("Transação 2:" + transaction2);
+    println("TransaÃ§Ã£o 1:" + transaction1);
+    println("TransaÃ§Ã£o 2:" + transaction2);
 
-    TransactionIngestor transactionIngestor = new TransactionIngestor("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv");
 
     println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
+    TransactionIngestor transactionIngestor = new TransactionIngestor("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv");
+
     transactionIngestor.readLines(1000);
     transactionIngestor.printLines(10);
+
+
+    println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    TransactionIngestor transactionIngestor2 = new TransactionIngestor("zenon-fraud-detector/data/paysim_with_bad_data.csv");
+
+    transactionIngestor2.readLines(100);
+    println(transactionIngestor2.size());
+    transactionIngestor2.printLines(100);
+
 }
 
 

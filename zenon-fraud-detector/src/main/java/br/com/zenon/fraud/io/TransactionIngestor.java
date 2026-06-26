@@ -12,7 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
+
+import static java.lang.IO.println;
 
 public  class  TransactionIngestor {
 
@@ -28,7 +32,9 @@ public  class  TransactionIngestor {
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             transactions =  lines.skip(1).limit(linesRead)
                     .map(linha -> linha.split(","))
-                    .map(this::criarTransacaoDoArray)
+                    .map(this::createTransactionFromArray)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
                     .toList();
             return transactions;
         } catch (IOException e) {
@@ -36,22 +42,31 @@ public  class  TransactionIngestor {
         }
     }
 
-    private Transaction criarTransacaoDoArray(String[] linha) {
+    private Optional<Transaction> createTransactionFromArray(String[] linha) {
 
-        return new Transaction(Integer.parseInt(linha[0]),
-                Type.valueOf(linha[1]),
-                new BigDecimal(linha[2]),
-                new TransactionCostumer(linha[3],
-                        new BigDecimal(linha[4]),
-                        new BigDecimal(linha[5])),
-                new TransactionCostumer(linha[6],
-                        new BigDecimal(linha[7]),
-                        new BigDecimal(linha[8])),
-                "1".equals(linha[9]),
-                "1".equals(linha[10]));
+        try {
+            return Optional.of( new Transaction(Integer.parseInt(linha[0]),
+                    Type.valueOf(linha[1]),
+                    new BigDecimal(linha[2]),
+                    new TransactionCostumer(linha[3],
+                            new BigDecimal(linha[4]),
+                            new BigDecimal(linha[5])),
+                    new TransactionCostumer(linha[6],
+                            new BigDecimal(linha[7]),
+                            new BigDecimal(linha[8])),
+                    "1".equals(linha[9]),
+                    "1".equals(linha[10])));
+        } catch (IllegalArgumentException e) {
+            println("Erro: "+String.join(",", linha) +" | " + e);
+        }
+        return Optional.empty();
     }
 
     public void printLines(int linesPrint) {
         transactions.stream().limit(linesPrint).forEach(System.out::println);
+    }
+
+    public int size() {
+        return transactions.size();
     }
 }
