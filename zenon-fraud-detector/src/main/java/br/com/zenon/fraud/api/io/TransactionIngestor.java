@@ -3,7 +3,7 @@ package br.com.zenon.fraud.api.io;
 
 import br.com.zenon.fraud.domain.enums.Type;
 import br.com.zenon.fraud.domain.records.Transaction;
-import br.com.zenon.fraud.domain.records.TransactionCostumer;
+import br.com.zenon.fraud.api.io.TransactionUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -31,7 +31,7 @@ public  class  TransactionIngestor {
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             transactions =  lines.skip(1).limit(linesRead)
                     .map(linha -> linha.split(","))
-                    .map(this::createTransactionFromArray)
+                    .map(TransactionUtils::createTransactionFromArray)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .toList();
@@ -39,26 +39,6 @@ public  class  TransactionIngestor {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private Optional<Transaction> createTransactionFromArray(String[] linha) {
-
-        try {
-            return Optional.of( new Transaction(Integer.parseInt(linha[0]),
-                    Type.valueOf(linha[1]),
-                    new BigDecimal(linha[2]),
-                    new TransactionCostumer(linha[3],
-                            new BigDecimal(linha[4]),
-                            new BigDecimal(linha[5])),
-                    new TransactionCostumer(linha[6],
-                            new BigDecimal(linha[7]),
-                            new BigDecimal(linha[8])),
-                    "1".equals(linha[9]),
-                    "1".equals(linha[10])));
-        } catch (IllegalArgumentException e) {
-            println("Erro: "+String.join(",", linha) +" | " + e);
-        }
-        return Optional.empty();
     }
 
     public void printLines(int linesPrint) {
