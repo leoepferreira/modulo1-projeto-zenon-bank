@@ -3,6 +3,8 @@ import br.com.zenon.fraud.api.io.TransactionIngestor;
 import br.com.zenon.fraud.domain.records.Transaction;
 import br.com.zenon.fraud.domain.records.TransactionCostumer;
 import br.com.zenon.fraud.service.FraudAnalyzer;
+import br.com.zenon.fraud.service.TransactionRepositoryList;
+import br.com.zenon.fraud.service.TransactionRepositoryMap;
 
 import static java.lang.IO.print;
 import static java.lang.IO.println;
@@ -69,6 +71,60 @@ void main() {
     println("5. Fraudes por Tipo:");
     FraudAnalyzer.printFraudsPerTypeCount(transactionsList,Type.CASH_OUT);
     FraudAnalyzer.printFraudsPerTypeCount(transactionsList,Type.TRANSFER);
+
+
+    println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+    TransactionRepositoryList transactionRepositoryList = new TransactionRepositoryList();
+
+    transactionRepositoryList.ReadLines("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv", 100_000);
+
+    String costumerOriginName1 = "C12345";
+    String costumerOriginName2 = "C1231006815";
+
+    Optional<Transaction> transactionFinded1 = transactionRepositoryList.FindTransaction(costumerOriginName1 );
+    if (transactionFinded1.isPresent()) {
+        System.out.println(transactionFinded1.get());
+    } else {
+        System.out.println("Transação não encontrada para o cliente " +  costumerOriginName1);
+    }
+
+    Optional<Transaction> transactionFinded2 = transactionRepositoryList.FindTransaction(costumerOriginName2 );
+    if (transactionFinded2.isPresent()) {
+        System.out.println(transactionFinded2.get());
+    } else {
+        System.out.println("Transação não encontrada para o cliente " +  costumerOriginName2);
+    }
+
+    println("--------Benchmark----------------------------------------------------------------------------------------------------------------------------------------------------------");
+    String costumerOriginName = "C1868032458";
+    String fileName = "zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv";
+    Optional<Transaction> transactionFinded;
+
+    TransactionRepositoryList benchmarkTransactionRepositoryList = new TransactionRepositoryList();
+    long startListLoadTime = System.nanoTime();
+    benchmarkTransactionRepositoryList.ReadLines(fileName, 100_000);
+    long finalListLoadTime = System.nanoTime();
+    println("Tempo total para carregar o 100.000 registros em lista: " + (finalListLoadTime - startListLoadTime));
+    long startListSearchTime = System.nanoTime();
+    transactionFinded = transactionRepositoryList.FindTransaction(costumerOriginName );
+    long finalListSearchTime = System.nanoTime();
+    println("Tempo total para pesquisar nos 100.000 registros em lista: " + (finalListSearchTime - startListSearchTime));
+    println(transactionFinded);
+
+
+
+    TransactionRepositoryMap benchmarkTransactionRepositoryMap = new TransactionRepositoryMap();
+    long startMapLoadTime = System.nanoTime();
+    benchmarkTransactionRepositoryMap.ReadLines(fileName, 100_000);
+    long finalMapLoadTime = System.nanoTime();
+    println("\nTempo total para carregar o 100.000 registros em map: " + (finalMapLoadTime - startMapLoadTime));
+    long startMapSearchTime = System.nanoTime();
+    transactionFinded = benchmarkTransactionRepositoryMap.FindTransaction(costumerOriginName );
+    long finalMapSearchTime = System.nanoTime();
+    println("Tempo total para pesquisar nos 100.000 registros em map: " + (finalMapSearchTime - startMapSearchTime));
+    println(transactionFinded);
+
 
 }
 
