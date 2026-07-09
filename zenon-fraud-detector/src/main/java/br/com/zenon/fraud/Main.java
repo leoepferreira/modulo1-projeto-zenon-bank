@@ -1,8 +1,10 @@
-import br.com.zenon.fraud.enums.Type;
-import br.com.zenon.fraud.io.TransactionIngestor;
-import br.com.zenon.fraud.records.Transaction;
-import br.com.zenon.fraud.records.TransactionCostumer;
+import br.com.zenon.fraud.domain.enums.Type;
+import br.com.zenon.fraud.api.io.TransactionIngestor;
+import br.com.zenon.fraud.domain.records.Transaction;
+import br.com.zenon.fraud.domain.records.TransactionCostumer;
+import br.com.zenon.fraud.service.FraudAnalyzer;
 
+import static java.lang.IO.print;
 import static java.lang.IO.println;
 
 void main() {
@@ -48,6 +50,25 @@ void main() {
     transactionIngestor2.readLines(100);
     println(transactionIngestor2.size());
     transactionIngestor2.printLines(100);
+
+
+
+    println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    TransactionIngestor transactionIngestor3 = new TransactionIngestor("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv");
+    transactionIngestor3.readLines(50000);
+    List<Transaction> transactionsList = transactionIngestor3.getTransactions();
+
+    print("1. Total de Fraudes: ");
+    FraudAnalyzer.printFraudsCount(transactionsList);
+    println("2. Top 3 Fraudes de Maior Valor:");
+    FraudAnalyzer.printBiggestAmountsFrauds(transactionsList,3);
+    println("3. Clientes Suspeitos:");
+    FraudAnalyzer.majorSuspects(transactionsList,5);
+    print("4. Prejuízo Total: ");
+    FraudAnalyzer.printFraudsSum(transactionsList);
+    println("5. Fraudes por Tipo:");
+    FraudAnalyzer.printFraudsPerTypeCount(transactionsList,Type.CASH_OUT);
+    FraudAnalyzer.printFraudsPerTypeCount(transactionsList,Type.TRANSFER);
 
 }
 

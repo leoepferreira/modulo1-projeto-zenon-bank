@@ -1,4 +1,4 @@
-package br.com.zenon.fraud.records;
+package br.com.zenon.fraud.domain.records;
 import java.math.BigDecimal;
 import java.util.Objects;
 
