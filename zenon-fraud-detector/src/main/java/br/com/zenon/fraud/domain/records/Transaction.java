@@ -1,6 +1,6 @@
-package br.com.zenon.fraud.records;
+package br.com.zenon.fraud.domain.records;
 
-import br.com.zenon.fraud.enums.Type;
+import br.com.zenon.fraud.domain.enums.Type;
 import java.math.BigDecimal;
 import java.util.Objects;
 

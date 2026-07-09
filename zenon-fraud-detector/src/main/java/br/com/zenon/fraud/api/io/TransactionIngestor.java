@@ -1,9 +1,9 @@
-package br.com.zenon.fraud.io;
+package br.com.zenon.fraud.api.io;
 
 
-import br.com.zenon.fraud.enums.Type;
-import br.com.zenon.fraud.records.Transaction;
-import br.com.zenon.fraud.records.TransactionCostumer;
+import br.com.zenon.fraud.domain.enums.Type;
+import br.com.zenon.fraud.domain.records.Transaction;
+import br.com.zenon.fraud.domain.records.TransactionCostumer;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -68,5 +67,9 @@ public  class  TransactionIngestor {
 
     public int size() {
         return transactions.size();
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }
