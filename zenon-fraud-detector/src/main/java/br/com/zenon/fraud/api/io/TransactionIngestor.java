@@ -1,12 +1,9 @@
 package br.com.zenon.fraud.api.io;
 
 
-import br.com.zenon.fraud.domain.enums.Type;
 import br.com.zenon.fraud.domain.records.Transaction;
-import br.com.zenon.fraud.api.io.TransactionUtils;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static java.lang.IO.println;
 
 public  class  TransactionIngestor {
 
@@ -51,5 +47,19 @@ public  class  TransactionIngestor {
 
     public List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public List<Transaction> readAllLines() {
+        try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
+            transactions =  lines.skip(1)
+                    .map(linha -> linha.split(","))
+                    .map(TransactionUtils::createTransactionFromArray)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .toList();
+            return transactions;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

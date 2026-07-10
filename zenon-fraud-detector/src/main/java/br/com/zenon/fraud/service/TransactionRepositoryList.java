@@ -25,4 +25,9 @@ public class TransactionRepositoryList implements TransactionRepository {
         return transactionIngestor.getTransactions().stream().filter(transaction ->
             Objects.equals(transaction.origin().name(),costumerOriginName)).findFirst();
     }
+
+    public void ReadAllLines(String fileName) {
+        this.transactionIngestor = new TransactionIngestor(fileName);
+        transactionIngestor.readAllLines();
+    }
 }

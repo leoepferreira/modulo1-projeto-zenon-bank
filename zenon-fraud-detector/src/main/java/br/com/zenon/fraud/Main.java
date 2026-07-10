@@ -111,7 +111,7 @@ void main() {
     long finalListSearchTime = System.nanoTime();
     println("Tempo total para pesquisar nos 100.000 registros em lista: " + (finalListSearchTime - startListSearchTime));
     println(transactionFinded);
-
+    benchmarkTransactionRepositoryList = null;
 
 
     TransactionRepositoryMap benchmarkTransactionRepositoryMap = new TransactionRepositoryMap();
@@ -124,6 +124,22 @@ void main() {
     long finalMapSearchTime = System.nanoTime();
     println("Tempo total para pesquisar nos 100.000 registros em map: " + (finalMapSearchTime - startMapSearchTime));
     println(transactionFinded);
+    benchmarkTransactionRepositoryMap = null;
+
+    println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+   /* REMOVIDO, ERA APENAS PARA TESTES DE ESTOURO DE MEMÓRIA (NÃO APAGADO PARA FICAR COMO REFERÊNCIA)
+
+   long maxMemory = Runtime.getRuntime().maxMemory();
+    System.out.println("Memória Máxima da JVM: " + (maxMemory / 1024 / 1024) + "MB");
+
+    String fileNameIO = "zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv";
+
+    TransactionRepositoryList ioTransactionRepositoryList = new TransactionRepositoryList();
+    ioTransactionRepositoryList.ReadAllLines(fileName);
+
+        println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+*/
 
 
 }
