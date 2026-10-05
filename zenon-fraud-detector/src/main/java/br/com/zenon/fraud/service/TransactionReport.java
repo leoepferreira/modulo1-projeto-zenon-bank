@@ -7,22 +7,30 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import static br.com.zenon.fraud.api.io.TransactionUtils.createTransactionFromArray;
+import static java.lang.IO.println;
 
 public class TransactionReport  {
 
-    private static class EstatisticasRelatorio {
-        int totalLinhas = 0;
-        int totalFraudes = 0;
-        BigDecimal valorTotal = BigDecimal.ZERO;
+    Locale locale   = Locale.of("pt","BR");
+
+    public TransactionReport() {
+    }
+
+    public TransactionReport(Locale locale) {
+        this.locale = locale;
     }
 
     public void createReport(String fileName) {
 
         final EstatisticasRelatorio stats = new EstatisticasRelatorio();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("report", locale);
 
         try (Stream<String> linhas = Files.lines(Path.of(fileName), StandardCharsets.UTF_8)) {
 
@@ -43,13 +51,17 @@ public class TransactionReport  {
                 }
             });
 
-            System.out.println("Total de linhas: " + stats.totalLinhas);
-            System.out.println("Total de fraudes: " + stats.totalFraudes);
-            System.out.println("Valor total transacionado: " + stats.valorTotal);
+            println(resourceBundle.getObject("total.linhas") + ": " + NumberFormat.getIntegerInstance(locale).format(stats.totalLinhas));
+            println(resourceBundle.getObject("total.fraudes") + " " + NumberFormat.getIntegerInstance(locale).format(stats.totalFraudes) );
+            println(resourceBundle.getObject("total.valor") + ": " + NumberFormat.getCurrencyInstance(locale).format( stats.valorTotal));
 
         } catch (IOException e) {
-            System.err.println("Deu erro ao ler o arquivo: " + e.getMessage());
+            println(resourceBundle.getObject("erro.leitura") + ": " + e.getMessage());
         }
     }
-
+    private static class EstatisticasRelatorio {
+        int totalLinhas = 0;
+        int totalFraudes = 0;
+        BigDecimal valorTotal = BigDecimal.ZERO;
+    }
 }
