@@ -36,14 +36,14 @@ void main() {
 
     println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-    TransactionIngestor transactionIngestor = new TransactionIngestor("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv");
+    TransactionIngestor transactionIngestor = new TransactionIngestor("data/PS_20174392719_1491204439457_log.csv");
 
     transactionIngestor.readLines(1000);
     transactionIngestor.printLines(10);
 
 
     println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-    TransactionIngestor transactionIngestor2 = new TransactionIngestor("zenon-fraud-detector/data/paysim_with_bad_data.csv");
+    TransactionIngestor transactionIngestor2 = new TransactionIngestor("data/paysim_with_bad_data.csv");
 
     transactionIngestor2.readLines(100);
     println(transactionIngestor2.size());
