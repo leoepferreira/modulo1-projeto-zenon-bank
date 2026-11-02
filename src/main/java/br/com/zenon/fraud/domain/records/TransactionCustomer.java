@@ -6,7 +6,7 @@ public record TransactionCustomer(String name,
                                   BigDecimal oldBalance,
                                   BigDecimal newBalance) {
 
-    public TransactionCostumer {
+    public TransactionCustomer {
         Objects.requireNonNull(name);
         Objects.requireNonNull(oldBalance);
         Objects.requireNonNull(newBalance);
