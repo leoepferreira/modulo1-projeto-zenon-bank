@@ -3,7 +3,7 @@ package br.com.zenon.fraud.service;
 import br.com.zenon.fraud.api.io.TransactionUtils;
 import br.com.zenon.fraud.domain.enums.Type;
 import br.com.zenon.fraud.domain.records.Transaction;
-import br.com.zenon.fraud.domain.records.TransactionCostumer;
+import br.com.zenon.fraud.domain.records.TransactionCustomer;
 
 import java.io.IOException;
 import java.math.BigDecimal;
