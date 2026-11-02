@@ -29,8 +29,8 @@ void main() {
             true,
             false);
 
-    println("Transação 1:" + transaction1);
-    println("Transação 2:" + transaction2);
+    println("TransaÃ§Ã£o 1:" + transaction1);
+    println("TransaÃ§Ã£o 2:" + transaction2);
 
 }
 
