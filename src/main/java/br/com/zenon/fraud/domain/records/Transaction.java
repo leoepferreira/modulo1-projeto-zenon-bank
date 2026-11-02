@@ -7,8 +7,8 @@ import java.util.Objects;
 public record Transaction(int step,
                           Type type,
                           BigDecimal amount,
-                          TransactionCostumer origin,
-                          TransactionCostumer recipient,
+                          TransactionCustomer origin,
+                          TransactionCustomer recipient,
                           boolean isFraud,
                           boolean isFlaggedFraud){
 
