@@ -1,0 +1,31 @@
+package br.com.zenon.fraud.service;
+
+import br.com.zenon.fraud.api.io.TransactionUtils;
+import br.com.zenon.fraud.domain.enums.Type;
+import br.com.zenon.fraud.domain.records.Transaction;
+import br.com.zenon.fraud.domain.records.TransactionCostumer;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.lang.IO.println;
+
+public class TransactionRepositoryJDBC implements TransactionRepository{
+
+
+    @Override
+    public void ReadLines(String fileName, int limit) {
+
+    }
+
+    @Override
+    public Optional<Transaction> FindTransaction(String costumerOriginName) {
+        return Optional.empty();
+    }
+}
