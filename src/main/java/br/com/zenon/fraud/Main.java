@@ -78,7 +78,7 @@ void main() {
 
     TransactionRepositoryList transactionRepositoryList = new TransactionRepositoryList();
 
-    transactionRepositoryList.ReadLines("zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv", 100_000);
+    transactionRepositoryList.ReadLines("data/PS_20174392719_1491204439457_log.csv", 100_000);
 
     String costumerOriginName1 = "C12345";
     String costumerOriginName2 = "C1231006815";
@@ -99,7 +99,7 @@ void main() {
 
     println("--------Benchmark----------------------------------------------------------------------------------------------------------------------------------------------------------");
     String costumerOriginName = "C1868032458";
-    String fileName = "zenon-fraud-detector/data/PS_20174392719_1491204439457_log.csv";
+    String fileName = "data/PS_20174392719_1491204439457_log.csv";
     Optional<Transaction> transactionFinded;
 
     TransactionRepositoryList benchmarkTransactionRepositoryList = new TransactionRepositoryList();
