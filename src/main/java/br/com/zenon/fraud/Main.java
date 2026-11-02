@@ -1,6 +1,6 @@
-import br.com.zenon.fraud.enums.Type;
-import br.com.zenon.fraud.records.Transaction;
-import br.com.zenon.fraud.records.TransactionCustomer;
+import br.com.zenon.fraud.domain.enums.Type;
+import br.com.zenon.fraud.domain.records.Transaction;
+import br.com.zenon.fraud.domain.records.TransactionCustomer;
 
 import static java.lang.IO.println;
 
